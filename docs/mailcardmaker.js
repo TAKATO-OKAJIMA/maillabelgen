@@ -97,13 +97,15 @@ const selectAddressCardForm = (ctx) => {
         selectedAddressCardFormElement.classList.remove('shadow');
     }
 
-    if(selectedAddressCardFormElement != ctx) {
-        ctx.classList.add('shadow');
-        selectedAddressCardFormElement = ctx;
-    }
-    else {
-        selectedAddressCardFormElement = null;
-    }
+    ctx.classList.add('shadow');
+    selectedAddressCardFormElement = ctx;
+    // if(selectedAddressCardFormElement != ctx) {
+    //     ctx.classList.add('shadow');
+    //     selectedAddressCardFormElement = ctx;
+    // }
+    // else {
+    //     selectedAddressCardFormElement = null;
+    // }
 }
 
 
