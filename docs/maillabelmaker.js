@@ -159,7 +159,7 @@ const selectAddressLabelImage = (ctx) => {
 const getSelectedDearTypeValue = (ctx) => {
     const selectIndex = ctx.selectedIndex;
 
-    if (selectIndex != 4) {
+    if (selectIndex != 3) {
         return ctx.options[selectIndex].text;
     }
     else {
