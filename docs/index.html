@@ -39,21 +39,21 @@
           flex: 1;
           background-color: #FFFFFF;
         } 
-        #\$addressCardFormList,  #\$addressCardImageList {
+        #\$addressLabelFormList,  #\$addressLabelImageList {
             overflow-x: hidden;
         }
         @media screen and (min-width: 769px) and (min-height: 969px) {
-            #\$addressCardFormList, #\$addressCardImageList {
+            #\$addressLabelFormList, #\$addressLabelImageList {
                 height: 606px;
             }
         }
         @media screen and (min-width: 769px) and (max-height: 968px) {
-            #\$addressCardFormList, #\$addressCardImageList {
+            #\$addressLabelFormList, #\$addressLabelImageList {
                 height: 420px;
             }
         }
         @media screen and (max-width: 768px) {
-            #\$addressCardFormList{
+            #\$addressLabelFormList{
                 height: 320px;
             }
         }
@@ -79,11 +79,11 @@
                     <h4 class="ms-3">宛名一覧</h4>
                     <div class="d-flex justify-content-center">
                         <div class="btn-group w-100" role="group">
-                            <button type="button" class="btn btn-primary fs-6" onclick="addAddressCardForm(document.getElementById('$addressCardFormList'))">
+                            <button type="button" class="btn btn-primary fs-6" onclick="addAddressLabelForm(document.getElementById('$addressLabelFormList'))">
                                 <i class="far fa-plus-square"></i>
                                 宛名追加
                             </button>
-                            <button type="button" class="btn btn-danger fs-6" onclick="removeAddressCardForm()">
+                            <button type="button" class="btn btn-danger fs-6" onclick="removeAddressLabelForm()">
                                 <i class="far fa-minus-square"></i>
                                 宛名削除
                             </button>
@@ -91,14 +91,14 @@
                     </div>
                 </div>
                 <div class="">
-                    <ul id="$addressCardFormList" class="list-unstyled overflow-y-scroll border">
+                    <ul id="$addressLabelFormList" class="list-unstyled overflow-y-scroll border">
                     </ul>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
                         <button type="button" class="btn btn-dark fs-6 w-100" onclick="makeAddressLabel(
-                                                                                                        document.getElementById('$addressCardImageList'),
-                                                                                                        document.getElementsByClassName('addressCardForm')
+                                                                                                        document.getElementById('$addressLabelImageList'),
+                                                                                                        document.getElementsByClassName('addressLabelForm')
                                                                                                         )">
                             <i class="far fa-address-card"></i>
                             ラベル作成
@@ -118,7 +118,7 @@
                             </button>
                         </li>
                         <li class="list-inline-item">
-                            <button type="button" class="btn btn-primary fs-6" onclick="downloadAllMailLabel(document.getElementById('$addressCardImageList'))">
+                            <button type="button" class="btn btn-primary fs-6" onclick="downloadAllMailLabel(document.getElementById('$addressLabelImageList'))">
                                 <i class="fas fa-download"></i>
                                 全てのラベルをダウンロード
                             </button>
@@ -126,19 +126,19 @@
                     </ul>
                 </div>
                 <div>
-                    <ul id="$addressCardImageList" class="list-unstyled overflow-y-scroll border">
+                    <ul id="$addressLabelImageList" class="list-unstyled overflow-y-scroll border">
                     </ul>
                 </div>
             </div>
         </div>
     </div>
     <footer></footer>
-    <script type="text/javascript" src="./mailcardmaker.js"></script>
+    <script type="text/javascript" src="./maillabelmaker.js"></script>
     <script type="text/javascript">
-        const addressCardFormList = document.getElementById('$addressCardFormList');
+        const addressLabelFormList = document.getElementById('$addressLabelFormList');
 
         document.addEventListener('DOMContentLoaded', () => {
-            addAddressCardForm(addressCardFormList);
+            addAddressLabelForm(addressLabelFormList);
         })
     </script>
 </body>

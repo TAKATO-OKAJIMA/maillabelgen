@@ -1,8 +1,8 @@
 const HTML_SPACE = '&nbsp;';
 
-const addressCardHTML = `
-<li class="border p-2 addressCardForm" onclick="selectAddressCardForm(this)">
-    <div class="row align-items-center addressCard">
+const addressLabelHTML = `
+<li class="border p-2 addressLabelForm" onclick="selectAddressLabelForm(this)">
+    <div class="row align-items-center addressLabel">
         <div class="col-md-12 mb-2">
             <div class="row">
                 <div class="col-md-7 d-flex flex-row">
@@ -28,7 +28,7 @@ const addressCardHTML = `
                 <div class="col-12">
                     <div class="input-group h-100">
                         <span class="input-group-text h-100 fs-5">🏢</span>
-                        <input type="text" class="form-control h-100 roomForm" placeholder="〇〇ビル1XX号室" autocomplete="postal-code">
+                        <input type="text" class="form-control h-100 roomForm" placeholder="〇〇ビル1XX号室">
                     </div>
                 </div>
             </div>
@@ -52,7 +52,7 @@ const addressCardHTML = `
             <div class="row">
                 <div class="col-12">
                     <div class="input-group h-100">
-                        <input type="text" class="form-control h-100 enclosureForm" placeholder="〇〇書類" autocomplete="postal-code">
+                        <input type="text" class="form-control h-100 enclosureForm" placeholder="〇〇書類">
                         <span class="input-group-text h-100 fs-5">在中</span>
                     </div>
                 </div>
@@ -85,26 +85,26 @@ const removeAllChild = (ctx) => {
 }
 
 
-let selectedAddressCardFormElement = null;
+let selectedAddressLabelFormElement = null;
 
 
 /**
  * 
  * @param {Element} ctx 
  */
-const selectAddressCardForm = (ctx) => {
-    if(selectedAddressCardFormElement) {
-        selectedAddressCardFormElement.classList.remove('shadow');
+const selectAddressLabelForm = (ctx) => {
+    if(selectedAddressLabelFormElement) {
+        selectedAddressLabelFormElement.classList.remove('shadow');
     }
 
     ctx.classList.add('shadow');
-    selectedAddressCardFormElement = ctx;
-    // if(selectedAddressCardFormElement != ctx) {
+    selectedAddressLabelFormElement = ctx;
+    // if(selectedAddressLabelFormElement != ctx) {
     //     ctx.classList.add('shadow');
-    //     selectedAddressCardFormElement = ctx;
+    //     selectedAddressLabelFormElement = ctx;
     // }
     // else {
-    //     selectedAddressCardFormElement = null;
+    //     selectedAddressLabelFormElement = null;
     // }
 }
 
@@ -113,19 +113,19 @@ const selectAddressCardForm = (ctx) => {
  * 
  * @param {HTMLUListElement} ctx 
  */
-const addAddressCardForm = (ctx) => {
+const addAddressLabelForm = (ctx) => {
     const parser = new DOMParser();
-    const addressCardForm = parser.parseFromString(addressCardHTML, 'text/html');
+    const addressLabelForm = parser.parseFromString(addressLabelHTML, 'text/html');
 
-    ctx.appendChild(addressCardForm.body.firstChild);
+    ctx.appendChild(addressLabelForm.body.firstChild);
 }
 
 
-const removeAddressCardForm = () => {
-    const parent = selectedAddressCardFormElement.parentElement;
+const removeAddressLabelForm = () => {
+    const parent = selectedAddressLabelFormElement.parentElement;
 
     if(parent.childElementCount > 1) {
-        parent.removeChild(selectedAddressCardFormElement);
+        parent.removeChild(selectedAddressLabelFormElement);
     }
 }
 
@@ -170,15 +170,15 @@ const getSelectedDearTypeValue = (ctx) => {
 
 /**
  * 
- * @param {HTMLLIElement} addressCardForm 
+ * @param {HTMLLIElement} addressLabelForm 
  */
-const validAndGetFormsValue = (addressCardForm) => {
-    const postalCodeForm = addressCardForm.getElementsByClassName('postalCodeForm')[0];
-    const addressForm = addressCardForm.getElementsByClassName('addressForm')[0];
-    const roomForm = addressCardForm.getElementsByClassName('roomForm')[0];
-    const dearForm = addressCardForm.getElementsByClassName('dearForm')[0];
-    const dearTypeSelect = addressCardForm.getElementsByClassName('dearTypeSelect')[0];
-    const enclosureForm = addressCardForm.getElementsByClassName('enclosureForm')[0];
+const validAndGetFormsValue = (addressLabelForm) => {
+    const postalCodeForm = addressLabelForm.getElementsByClassName('postalCodeForm')[0];
+    const addressForm = addressLabelForm.getElementsByClassName('addressForm')[0];
+    const roomForm = addressLabelForm.getElementsByClassName('roomForm')[0];
+    const dearForm = addressLabelForm.getElementsByClassName('dearForm')[0];
+    const dearTypeSelect = addressLabelForm.getElementsByClassName('dearTypeSelect')[0];
+    const enclosureForm = addressLabelForm.getElementsByClassName('enclosureForm')[0];
 
     let postalCodeValue = postalCodeForm.value;
     
@@ -225,9 +225,9 @@ const formatEnclosureHTML = (enclosure) => {
  * 
  * @param {object} formsValue 
  */
-const formatAddressCardImageHTML = (formsValue) => {
-    const addressCardImage = `
-    <li class="border border-2 p-2 addressCardImage" onclick="selectAddressLabelImage(this)">
+const formatAddressLabelImageHTML = (formsValue) => {
+    const addressLabelImage = `
+    <li class="border border-2 p-2 addressLabelImage" onclick="selectAddressLabelImage(this)">
         <div class="row">
             <div class="col-12 d-flex justify-content-end">
                 <span class="text-danger me-1 p-2 fs-3">〒</span>
@@ -244,13 +244,13 @@ const formatAddressCardImageHTML = (formsValue) => {
             <div class="col-12 d-flex justify-content-center text-center">
                 <ul class="list-group list-group-flush mt-5 mb-3" style="width: 85%;">
                     <li class="list-group-item border-bottom p-0">
-                        <span class="fs-3">${formsValue.address}</span>
+                        <span class="fs-3">${formsValue.address || HTML_SPACE}</span>
                     </li>
                     <li class="list-group-item border-bottom p-0">
                         <span class="fs-3">${formsValue.room || HTML_SPACE}</span>
                     </li>
                     <li class="list-group-item border-bottom p-0">
-                        <span class="fs-3">${formsValue.dear} ${formsValue.dearType}</span>
+                        <span class="fs-3">${formsValue.dear || HTML_SPACE} ${formsValue.dearType}</span>
                     </li>
                 </ul>
             </div>
@@ -260,7 +260,7 @@ const formatAddressCardImageHTML = (formsValue) => {
     `;
 
     const parser = new DOMParser();
-    const document = parser.parseFromString(addressCardImage, 'text/html');
+    const document = parser.parseFromString(addressLabelImage, 'text/html');
 
     return document.body.firstChild;
 }
@@ -269,16 +269,16 @@ const formatAddressCardImageHTML = (formsValue) => {
 /**
  * 
  * @param {HTMLUListElement} ctx 
- * @param {HTMLCollectionOf<HTMLLIElement>} addressCardFormList
+ * @param {HTMLCollectionOf<HTMLLIElement>} addressLabelFormList
  */
-const makeAddressLabel = (ctx, addressCardFormList) => {
+const makeAddressLabel = (ctx, addressLabelFormList) => {
     removeAllChild(ctx);
 
-    for(let addressCardForm of addressCardFormList) {
+    for(let addressLabelForm of addressLabelFormList) {
         try {
-            const formsValue = validAndGetFormsValue(addressCardForm);
-            const addressCardImage = formatAddressCardImageHTML(formsValue);
-            ctx.appendChild(addressCardImage);
+            const formsValue = validAndGetFormsValue(addressLabelForm);
+            const addressLabelImage = formatAddressLabelImageHTML(formsValue);
+            ctx.appendChild(addressLabelImage);
         } catch (e){
             console.error(e);
             continue;
