@@ -1,66 +1,67 @@
 const HTML_SPACE = '&nbsp;';
 
 const addressCardHTML = `
-<li class="border p-2 addressCardForm">
-<div class="row align-items-center addressCard">
-    <div class="col-md-12 mb-2">
-        <div class="row">
-            <div class="col-md-7 d-flex flex-row">
-                <div class="input-group h-100">
-                    <span class="input-group-text h-100 fs-5">〒</span>
-                    <input type="text" class="form-control h-100 postalCodeForm" placeholder="XXX-XXXX" autocomplete="postal-code">
+<li class="border p-2 addressCardForm" onclick="selectAddressCardForm(this)">
+    <div class="row align-items-center addressCard">
+        <div class="col-md-12 mb-2">
+            <div class="row">
+                <div class="col-md-7 d-flex flex-row">
+                    <div class="input-group h-100">
+                        <span class="input-group-text h-100 fs-5">〒</span>
+                        <input type="text" class="form-control h-100 postalCodeForm" placeholder="XXX-XXXX" autocomplete="postal-code">
+                    </div>
                 </div>
-            </div>
-            <div class="col-12 mb-2 d-md-none"></div>
-            <div class="col-md-5 ps-md-0">
-                <button type="button" class="btn btn-primary text-nowrap w-100 fs-6" disabled>
-                    <i class="fas fa-search"></i>
-                    住所検索
-                </button>
-            </div>
-        </div>
-    </div>
-    <div class="col-md-12 mb-2">
-        <textarea class="form-control w-100 addressForm" rows="3" placeholder="〇〇県△△市XX-X"></textarea>
-    </div>
-    <div class="col-md-12 mb-2">
-        <div class="row">
-            <div class="col-12">
-                <div class="input-group h-100">
-                    <span class="input-group-text h-100 fs-5">🏢</span>
-                    <input type="text" class="form-control h-100 roomForm" placeholder="〇〇ビル1XX号室" autocomplete="postal-code">
+                <div class="col-12 mb-2 d-md-none"></div>
+                <div class="col-md-5 ps-md-0">
+                    <button type="button" class="btn btn-primary text-nowrap w-100 fs-6" disabled>
+                        <i class="fas fa-search"></i>
+                        住所検索
+                    </button>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-12 mb-2">
-        <div class="row">
-            <div class="col-7 d-flex flex-row">
-                <input type="text" class="form-control h-100 dearForm" placeholder="田中 太郎">
-            </div>
-            <div class="col-5 ps-0">
-                <select class="form-select dearTypeSelect" aria-label="select">
-                    <option value="1">御中</option>
-                    <option value="2">様</option>
-                    <option value="3">行</option>
-                    <option value="4">無し</option>
-                </select>
+        <div class="col-md-12 mb-2">
+            <textarea class="form-control w-100 addressForm" rows="3" placeholder="〇〇県△△市XX-X"></textarea>
+        </div>
+        <div class="col-md-12 mb-2">
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group h-100">
+                        <span class="input-group-text h-100 fs-5">🏢</span>
+                        <input type="text" class="form-control h-100 roomForm" placeholder="〇〇ビル1XX号室" autocomplete="postal-code">
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
-    <div class="col-md-12">
-        <div class="row">
-            <div class="col-12">
-                <div class="input-group h-100">
-                    <input type="text" class="form-control h-100 enclosureForm" placeholder="〇〇書類" autocomplete="postal-code">
-                    <span class="input-group-text h-100 fs-5">在中</span>
+        <div class="col-md-12 mb-2">
+            <div class="row">
+                <div class="col-7 d-flex flex-row">
+                    <input type="text" class="form-control h-100 dearForm" placeholder="田中 太郎">
+                </div>
+                <div class="col-5 ps-0">
+                    <select class="form-select dearTypeSelect" aria-label="select">
+                        <option value="1">御中</option>
+                        <option value="2">様</option>
+                        <option value="3">行</option>
+                        <option value="4">無し</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-12">
+                    <div class="input-group h-100">
+                        <input type="text" class="form-control h-100 enclosureForm" placeholder="〇〇書類" autocomplete="postal-code">
+                        <span class="input-group-text h-100 fs-5">在中</span>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </li> 
 `;
+
 
 /**
  * 
@@ -84,15 +85,68 @@ const removeAllChild = (ctx) => {
 }
 
 
+let selectedAddressCardFormElement = null;
+
+
+/**
+ * 
+ * @param {Element} ctx 
+ */
+const selectAddressCardForm = (ctx) => {
+    if(selectedAddressCardFormElement) {
+        selectedAddressCardFormElement.classList.remove('shadow');
+    }
+
+    if(selectedAddressCardFormElement != ctx) {
+        ctx.classList.add('shadow');
+        selectedAddressCardFormElement = ctx;
+    }
+    else {
+        selectedAddressCardFormElement = null;
+    }
+}
+
+
 /**
  * 
  * @param {HTMLUListElement} ctx 
  */
-const addAddressCard = (ctx) => {
+const addAddressCardForm = (ctx) => {
     const parser = new DOMParser();
     const addressCardForm = parser.parseFromString(addressCardHTML, 'text/html');
 
     ctx.appendChild(addressCardForm.body.firstChild);
+}
+
+
+const removeAddressCardForm = () => {
+    const parent = selectedAddressCardFormElement.parentElement;
+
+    if(parent.childElementCount > 1) {
+        parent.removeChild(selectedAddressCardFormElement);
+    }
+}
+
+
+let selectedAddressLabelImageElement = null;
+
+
+/**
+ * 
+ * @param {Element} ctx 
+ */
+const selectAddressLabelImage = (ctx) => {
+    if(selectedAddressLabelImageElement) {
+        selectedAddressLabelImageElement.classList.remove('shadow');
+    }
+
+    if(selectedAddressLabelImageElement != ctx) {
+        ctx.classList.add('shadow');
+        selectedAddressLabelImageElement = ctx;
+    }
+    else {
+        selectedAddressLabelImageElement = null;
+    }
 }
 
 
@@ -171,7 +225,7 @@ const formatEnclosureHTML = (enclosure) => {
  */
 const formatAddressCardImageHTML = (formsValue) => {
     const addressCardImage = `
-    <li class="border border-2 p-2 addressCardImage">
+    <li class="border border-2 p-2 addressCardImage" onclick="selectAddressLabelImage(this)">
         <div class="row">
             <div class="col-12 d-flex justify-content-end">
                 <span class="text-danger me-1 p-2 fs-3">〒</span>
@@ -231,15 +285,40 @@ const makeAddressLabel = (ctx, addressCardFormList) => {
 }
 
 
+const downloadMailLabel = () => {
+    if(selectedAddressLabelImageElement) {
+        // const labelImage = selectedAddressLabelImageElement.cloneNode(true);
+        // labelImage.classList.remove('shadow');
+        // selectedAddressLabelImageElement.classList.remove('shadow');
+
+        html2canvas(selectedAddressLabelImageElement)
+                   .then((canvas) => {
+                        const id = new String(getRandomInt(10000)).padStart(4, '0');
+                        const link = document.createElement('a');
+                        link.href = canvas.toDataURL();
+                        link.download = `mailLabel_${id}.png`
+
+                        link.click();
+                   })
+        
+        selectedAddressLabelImageElement = null;
+    }
+}
+
+
 /**
  * 
  * @param {HTMLUListElement} ctx 
  */
 const downloadAllMailLabel = (ctx) => {
     for(let element of ctx.childNodes){
+        // const labelImage = element.cloneNode(true);
+        // labelImage.classList.remove('shadow');
+        // element.classList.remove('shadow');
+
         html2canvas(element)
                 .then((canvas) => {
-                    const id = new String(getRandomInt(10000)).padStart(4, '0')
+                    const id = new String(getRandomInt(10000)).padStart(4, '0');
 
                     const link = document.createElement('a');
                     link.href = canvas.toDataURL();

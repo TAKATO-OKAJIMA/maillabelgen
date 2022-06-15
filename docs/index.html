@@ -79,11 +79,11 @@
                     <h4 class="ms-3">宛名一覧</h4>
                     <div class="d-flex justify-content-center">
                         <div class="btn-group w-100" role="group">
-                            <button type="button" class="btn btn-primary fs-6" onclick="addAddressCard(document.getElementById('$addressCardFormList'))">
+                            <button type="button" class="btn btn-primary fs-6" onclick="addAddressCardForm(document.getElementById('$addressCardFormList'))">
                                 <i class="far fa-plus-square"></i>
                                 宛名追加
                             </button>
-                            <button type="button" class="btn btn-danger fs-6" disabled>
+                            <button type="button" class="btn btn-danger fs-6" onclick="removeAddressCardForm()">
                                 <i class="far fa-minus-square"></i>
                                 宛名削除
                             </button>
@@ -112,7 +112,7 @@
                     <h4 class="ms-3">作成ラベル一覧</h4>
                     <ul class="list-inline">
                         <li class="list-inline-item">
-                            <button type="button" class="btn btn-primary fs-6" disabled>
+                            <button type="button" class="btn btn-primary fs-6" onclick="downloadMailLabel()">
                                 <i class="fas fa-download"></i>
                                 選択したラベルをダウンロード
                             </button>
@@ -138,7 +138,7 @@
         const addressCardFormList = document.getElementById('$addressCardFormList');
 
         document.addEventListener('DOMContentLoaded', () => {
-            addAddressCard(addressCardFormList);
+            addAddressCardForm(addressCardFormList);
         })
     </script>
 </body>
