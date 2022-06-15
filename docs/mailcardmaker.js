@@ -65,7 +65,7 @@ const addressCardHTML = `
 /**
  * 
  * @param {number} max 
- * @returns 
+ * @returns {number} 0 ~ max - 1の値
  */
 const getRandomInt = (max) => {
     return Math.floor(Math.random() * max);
@@ -217,13 +217,10 @@ const formatAddressCardImageHTML = (formsValue) => {
  */
 const makeAddressLabel = (ctx, addressCardFormList) => {
     removeAllChild(ctx);
-    
-    console.log(addressCardFormList);
 
     for(let addressCardForm of addressCardFormList) {
         try {
             const formsValue = validAndGetFormsValue(addressCardForm);
-            console.log(formsValue);
             const addressCardImage = formatAddressCardImageHTML(formsValue);
             ctx.appendChild(addressCardImage);
         } catch (e){
