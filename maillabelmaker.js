@@ -48,12 +48,22 @@ const addressLabelHTML = `
                 </div>
             </div>
         </div>
-        <div class="col-md-12">
+        <div class="col-md-12 mb-2">
             <div class="row">
                 <div class="col-12">
                     <div class="input-group h-100">
                         <input type="text" class="form-control h-100 enclosureForm" placeholder="〇〇書類">
                         <span class="input-group-text h-100 fs-5">在中</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-12">
+            <div class="row">
+                <div class="col-4">
+                    <div class="form-check form-switch">
+                        <input class="form-check-input expressForm" type="checkbox" role="switch"/>
+                        <label class="form-check-label" for="flexSwitchCheckDefault">速達</label>
                     </div>
                 </div>
             </div>
@@ -179,6 +189,7 @@ const validAndGetFormsValue = (addressLabelForm) => {
     const dearForm = addressLabelForm.getElementsByClassName('dearForm')[0];
     const dearTypeSelect = addressLabelForm.getElementsByClassName('dearTypeSelect')[0];
     const enclosureForm = addressLabelForm.getElementsByClassName('enclosureForm')[0];
+    const expressForm = addressLabelForm.getElementsByClassName('expressForm')[0];
 
     let postalCodeValue = postalCodeForm.value;
     
@@ -192,7 +203,8 @@ const validAndGetFormsValue = (addressLabelForm) => {
     const roomValue = roomForm.value;
     const dearValue = dearForm.value;
     const dearTypeValue = getSelectedDearTypeValue(dearTypeSelect);
-    const enclosureValue = enclosureForm.value; 
+    const enclosureValue = enclosureForm.value;
+    const expressValue = expressForm.value;
 
     return {
         postalCode: postalCodeValue,
@@ -200,7 +212,8 @@ const validAndGetFormsValue = (addressLabelForm) => {
         room: roomValue,
         dear: dearValue,
         dearType: dearTypeValue,
-        enclosure: enclosureValue
+        enclosure: enclosureValue,
+        onExpress: expressValue
     };
 }
 
@@ -213,7 +226,22 @@ const formatEnclosureHTML = (enclosure) => {
                     <span class="text-danger fs-3 fw-bold">${enclosure}在中</span>
                 </div>
         </div>
-        `
+        `;
+    }
+    else {
+        return '';
+    }
+}
+
+const formatExpressHTML = (onExpress) => {
+    if(onExpress) {
+        return `
+        <div class="col-12 d-flex justify-content-center text-center">
+            <div class="bg-danger mb-3" style="width: 85%;">
+                <span class="text-danger fs-3 fw-bold bg-white h-100 d-inline-block">【 速  達 】</span>
+            </div>
+        </div>
+        `;
     }
     else {
         return '';
@@ -229,6 +257,7 @@ const formatAddressLabelImageHTML = (formsValue) => {
     const addressLabelImage = `
     <li class="border border-2 p-2 addressLabelImage" onclick="selectAddressLabelImage(this)">
         <div class="row">
+            ${formatExpressHTML(formsValue.onExpress)}
             <div class="col-12 d-flex justify-content-end">
                 <span class="text-danger me-1 p-2 fs-3">〒</span>
                 <span class="border border-3 me-1 p-2 fs-3">${formsValue.postalCode[0]}</span>
